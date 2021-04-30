@@ -58,7 +58,7 @@ while True:
         auto = automata(grammars[int(opt)])
         #string = input("> Ingresa una cadena: ")
         string = "abzba"
-        auto.validate(string)
+        path = auto.validate(string)
         confirm()
     elif option == "5":
         pass

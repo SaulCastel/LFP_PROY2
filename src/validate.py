@@ -17,6 +17,7 @@ class path:
         self.prod:list = prod
         self.used:list = used
         self.history = []
+        self.pid = ""
 
     def take(self,shot:snap):
         self.history.append(shot)

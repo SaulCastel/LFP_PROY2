@@ -1,4 +1,4 @@
-
+from tda import sList
 from validate import *
 import copy
 
@@ -9,6 +9,7 @@ class produccion:
         self.pop = pop
         self.end = end
         self.push = push
+        self.next = None
 
     def getProd(self):
         str = f"({self.start},{self.read},{self.pop};"
@@ -19,10 +20,17 @@ class automata:
     def __init__(self, grammar) -> None:
         self.name = "AP_"+grammar.name
         self.Sn = grammar.Sn
-        self.Pr = []
-        self.genProd(grammar.Pr,grammar.Vt)
+        self.Vt = grammar.Vt
+        self.Pr = sList()
+        self.genProd(grammar.Pr,self.Vt)
         self.state = "i"
 
+    def isVt(self, target) -> bool:
+        for t in self.Vt:
+            if target == t:
+                return True
+        return False
+        
     def genProd(self, Pr, Vt):
         self.Pr.append(produccion("i","$","$","p","#"))
         self.Pr.append(produccion("p","$","$","q",self.Sn))
@@ -39,27 +47,27 @@ class automata:
         paths = [first]
         while len(paths) > 0:
             print("\n------------\n")
-            print("Nuevo camino")
+            print("Nuevo camino...")
             curr:path = paths.pop(0)
-            # Indice de la siguiente produccion
-            iNext = 3
-            next = curr.prod[iNext].pop
             while True:
                 for prod in curr.prod:
                     if self.state == "i" or self.state == "p":
                         self.apply(prod,curr)
                     elif self.state == "q":
                         if prod.start == "q":
-                            if next == prod.pop:
-                                new = copy.deepcopy(curr)
-                                paths.append(new)
-                            if not (iNext + 1) > (len(curr.prod)-1):
-                                iNext += 1
-                            next = curr.prod[iNext].pop
                             sTop = curr.stack[-1]
                             iTop = curr.input[-1]
-                            if sTop == prod.pop:
-                                self.apply(prod,curr)
+                            if not self.isVt(sTop):
+                                actual = prod.pop
+                                next = prod.next.pop
+                                if sTop == actual:
+                                    oldStack = copy.deepcopy(curr.stack)
+                                    self.apply(prod,curr)
+                                    if next == actual:
+                                        new = copy.deepcopy(curr)
+                                        new.stack = oldStack
+                                        new.history.pop()
+                                        paths.append(new)
                             elif iTop == prod.read and sTop == iTop:
                                 curr.used.extend(curr.prod)
                                 curr.prod = curr.used
@@ -91,13 +99,14 @@ class automata:
         selection = prod.getProd()
         shot = snap(curr.input,curr.stack,selection)
         curr.history.append(shot)
-        self.state = prod.end
         self.showStep(selection,curr.stack,curr.input)
+        self.state = prod.end
 
     def strToArr(self, string:str) -> list:
-        arr = []
-        for char in string:
-            if char != " ":
+        arr = string.split()
+        if arr[0] == string:
+            arr = []
+            for char in string:
                 arr.append(char)
         arr.reverse()
         return arr
