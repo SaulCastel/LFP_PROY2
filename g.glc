@@ -1,0 +1,18 @@
+g1
+S,M,N;a,b,z;S
+S->z M N z
+M->a M a
+M->z
+N->b N b
+N->z
+*
+g2
+S,A,B,C;a,b,z;S
+S->A
+A->a A a
+A->B
+B->b B b
+B->C
+C->z C
+C->z
+*
