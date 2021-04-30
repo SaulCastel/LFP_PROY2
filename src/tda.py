@@ -1,10 +1,7 @@
 class node:
-    def __init__(self,object) -> None:
-        self.object = object
+    def __init__(self,obj) -> None:
+        self.obj = obj
         self.next = None
-
-    def get(self):
-        return self.object
 
 class sList:
     def __init__(self) -> None:
@@ -14,7 +11,7 @@ class sList:
     def __iter__(self):
         current = self.head
         while current != None:
-            yield current.object
+            yield current.obj
             current = current.next
 
     def __getitem__(self,index):
@@ -24,7 +21,7 @@ class sList:
             curr = self.head
             for i in range(index):
                 curr = curr.next
-            return curr
+            return curr.obj
 
     def append(self, object):
         if self.size == 0:

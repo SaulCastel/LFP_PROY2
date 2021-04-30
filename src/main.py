@@ -1,4 +1,4 @@
-from grammar import automata
+from automaton import automata
 from readFile import readFile
 import os
 
@@ -26,7 +26,8 @@ while True:
     if option == "6":
         break
     if option == "1":
-        route = input("> Ruta del archivo: ")
+        route = "g.glc"
+        #route = input("> Ruta del archivo: ")
         try:
             grammars = readFile(route)
         except:
@@ -47,12 +48,16 @@ while True:
         pass
     elif option == "4":
         clear()
+        '''
         for i in range(len(grammars)):
             print(f"{i}.",grammars[i].name)
         opt = input("> Escoge el numero: ")
         clear()
+        '''
+        opt = 1
         auto = automata(grammars[int(opt)])
-        string = input("> Ingresa una cadena: ")
+        #string = input("> Ingresa una cadena: ")
+        string = "abzba"
         auto.validate(string)
         confirm()
     elif option == "5":
