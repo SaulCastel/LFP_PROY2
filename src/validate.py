@@ -1,3 +1,4 @@
+from tda import sList
 class snap:
     def __init__(self,input,stack,prod) -> None:
         self.input = self.arrToStr(input)
@@ -14,7 +15,7 @@ class path:
     def __init__(self,input,stack,prod,used) -> None:
         self.input:list = input
         self.stack:list = stack
-        self.prod:list = prod
+        self.prod:sList = prod
         self.used:list = used
         self.history = []
         self.pid = ""

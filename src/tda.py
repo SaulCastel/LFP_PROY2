@@ -32,3 +32,21 @@ class sList:
                 curr = curr.next
             curr.next = object
         self.size += 1
+
+    def pop(self,index=None):
+        if index == None:
+            index = self.size
+        if index == 0:
+            get = self.head
+            self.head = self.head.next
+            self.size -= 1
+            return get
+        else:
+            curr = self.head
+            prev = self.head
+            for i in range(index):
+                prev = curr
+                curr = curr.next
+            prev.next = curr.next
+            self.size -= 1
+            return curr

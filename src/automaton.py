@@ -43,23 +43,33 @@ class automata:
     
     def validate(self,string) -> path:
         input = self.strToArr(string)
-        first = path(input,[],self.Pr,[])
+        PrCopy = copy.deepcopy(self.Pr)
+        first = path(input,[],PrCopy,[])
         paths = [first]
+        pNum = 0
+        last = None
         while len(paths) > 0:
-            print("\n------------\n")
-            print("Nuevo camino...")
+            #print("\n------------\n")
+            #print("Nuevo camino...")
             curr:path = paths.pop(0)
+            last = curr
+            pNum += 1
             while True:
-                for prod in curr.prod:
+                while self.state == "f" or curr.prod.size > 0:
+                    if self.state != "f":
+                        prod = curr.prod.pop(0)
                     if self.state == "i" or self.state == "p":
                         self.apply(prod,curr)
                     elif self.state == "q":
                         if prod.start == "q":
                             sTop = curr.stack[-1]
-                            iTop = curr.input[-1]
+                            if len(curr.input) > 0:
+                                iTop = curr.input[-1]
                             if not self.isVt(sTop):
                                 actual = prod.pop
-                                next = prod.next.pop
+                                next = None
+                                if prod.next != None:
+                                    next = prod.next.pop
                                 if sTop == actual:
                                     oldStack = copy.deepcopy(curr.stack)
                                     self.apply(prod,curr)
@@ -69,23 +79,28 @@ class automata:
                                         new.history.pop()
                                         paths.append(new)
                             elif iTop == prod.read and sTop == iTop:
-                                curr.used.extend(curr.prod)
-                                curr.prod = curr.used
+                                curr.prod = copy.deepcopy(self.Pr)
                                 curr.used = []
                                 self.apply(prod,curr)
                                 break
                     elif self.state == "f":
-                        print("\n------------\n")
-                        print(">> ¡Cadena valida!")
+                        print("\n------------------------\n")
+                        print(">> ¡CADENA VALIDA!")
+                        print(">> Cadena:",string)
+                        print(">> Caminos analizados:",pNum)
+                        print("\n------------------------\n")
                         return curr
                 else:
-                    print("\n------------\n")
-                    print("Camino agotado...")
-                    #paths.remove(curr)
+                    #print("\n------------\n")
+                    #print("Camino agotado...")
                     break
         else:
-            print("\n------------\n")
-            print(">> ¡Cadena invalida!")
+            print("\n------------------------\n")
+            print(">> ¡CADENA INVALIDA!")
+            print(">> Cadena:",string)
+            print(">> Caminos analizados:",pNum)
+            print("\n------------------------\n")
+            return last
     
     def apply(self,prod:produccion,curr:path):
         if prod.read != "$":
@@ -99,7 +114,7 @@ class automata:
         selection = prod.getProd()
         shot = snap(curr.input,curr.stack,selection)
         curr.history.append(shot)
-        self.showStep(selection,curr.stack,curr.input)
+        #self.showStep(selection,curr.stack,curr.input)
         self.state = prod.end
 
     def strToArr(self, string:str) -> list:
