@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Reporte</title>
+		<link rel="stylesheet" href="styles/tablas.css" />
+	</head>
+	<body>
+		<h1>Cadena: abzba</h1>
+		<table>
+			<tr>
+				<th>Iteración</th>
+				<th>Pila</th>
+				<th>Entrada</th>
+				<th>Transición</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>#</td>
+				<td>abzba</td>
+				<td>(i, $, $; p, #)</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>#S</td>
+				<td>abzba</td>
+				<td>(p, $, $; q, S)</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>#A</td>
+				<td>abzba</td>
+				<td>(q, $, S; q, A)</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>#aAa</td>
+				<td>abzba</td>
+				<td>(q, $, A; q, aAa)</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>#aA</td>
+				<td>abzb</td>
+				<td>(q, a, a; q, $)</td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>#aB</td>
+				<td>abzb</td>
+				<td>(q, $, A; q, B)</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>#abBb</td>
+				<td>abzb</td>
+				<td>(q, $, B; q, bBb)</td>
+			</tr>
+			<tr>
+				<td>8</td>
+				<td>#abB</td>
+				<td>abz</td>
+				<td>(q, b, b; q, $)</td>
+			</tr>
+			<tr>
+				<td>9</td>
+				<td>#abC</td>
+				<td>abz</td>
+				<td>(q, $, B; q, C)</td>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td>#abz</td>
+				<td>abz</td>
+				<td>(q, $, C; q, z)</td>
+			</tr>
+			<tr>
+				<td>11</td>
+				<td>#ab</td>
+				<td>ab</td>
+				<td>(q, z, z; q, $)</td>
+			</tr>
+			<tr>
+				<td>12</td>
+				<td>#a</td>
+				<td>a</td>
+				<td>(q, b, b; q, $)</td>
+			</tr>
+			<tr>
+				<td>13</td>
+				<td>#</td>
+				<td />
+				<td>(q, a, a; q, $)</td>
+			</tr>
+			<tr>
+				<td>14</td>
+				<td />
+				<td />
+				<td>(q, $, #; f, $)</td>
+			</tr>
+		</table>
+		<h1>Cadena aceptada</h1>
+	</body>
+</html>

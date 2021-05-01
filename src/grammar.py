@@ -7,13 +7,37 @@ class gramatica:
         self.Vn = tmp[0].split(",")
         self.Vt = tmp[1].split(",")
         self.Sn = tmp[2]
+        self.glc = False
         self.Pr = []
         while len(parts) > 0:
             prod = parts.pop(0).split("->")
             prod[0] = prod[0].strip()
             prod[1] = prod[1].strip()
             self.Pr.append(prod)
+            self.isGlc(prod)
         self.auto:automata = None
+
+    def isGlc(self,prod):
+        left = prod[0].split()
+        numL = 0
+        for e in left:
+            for nt in self.Vn:
+                if e == nt:
+                    numL += 1
+        right = prod[1].split()
+        rNt = 0
+        for e in right:
+            for nt in self.Vn:
+                if e == nt:
+                    rNt += 1
+        rT = 0
+        for e in right:
+            for t in self.Vt:
+                if e == t:
+                    rT += 1
+        if numL == 1:
+            if rNt > 1 or rT > 1:
+                self.glc = True
 
     def showGrammar(self):
         print("\n------------------------------------------\n")

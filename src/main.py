@@ -1,3 +1,4 @@
+from generateHtml import genTable
 from graph import genGraph
 from grammar import gramatica
 from automaton import automata
@@ -17,6 +18,9 @@ grammars = []
 
 clear = lambda : os.system("clear")
 confirm = lambda : input("> Presione cualquier tecla para continuar...")
+file = open("./log.txt","w")
+file.write("")
+file.close()
 
 while True:
     clear()
@@ -73,5 +77,17 @@ while True:
             print("[Error en la seleccion]")
         confirm()
     elif option == "5":
-        pass
+        clear()
+        for i in range(len(grammars)):
+            print(f"{i}.",grammars[i].name)
+        opt = input("> Escoge el numero: ")
+        try:
+            clear()
+            auto = grammars[int(opt)].auto
+            string = input("> Ingresa una cadena: ")
+            path = auto.validate(string)
+            genTable(path,string)
+        except:
+            print("[Error en la seleccion]")
+        confirm()
 clear()

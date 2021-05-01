@@ -1,0 +1,1 @@
+gram.txt'Gramatica2'' No es GLC, así que no se cargó

@@ -12,8 +12,10 @@ class produccion:
         self.next = None
 
     def getProd(self):
+        end = self.end.replace(" ","")
+        push = self.push.replace(" ","")
         str = f"({self.start}, {self.read}, {self.pop};"
-        str += f" {self.end}, {self.push})"
+        str += f" {end}, {push})"
         return str
 
 class automata:
@@ -89,6 +91,7 @@ class automata:
                         print(">> Cadena:",string)
                         print(">> Caminos analizados:",pNum)
                         print("\n------------------------\n")
+                        curr.valid = True
                         return curr
                 else:
                     #print("\n------------\n")
