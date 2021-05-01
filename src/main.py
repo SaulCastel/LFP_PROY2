@@ -1,3 +1,5 @@
+from graph import genGraph
+from grammar import gramatica
 from automaton import automata
 from readFile import readFile
 import os
@@ -44,7 +46,19 @@ while True:
             print("[Error en la seleccion]")
         confirm()
     elif option == "3":
-        pass
+        clear()
+        for i in range(len(grammars)):
+            print(f"{i}.",grammars[i].name)
+        opt = input("> Escoge el numero: ")
+        try:
+            clear()
+            gram:gramatica = grammars[int(opt)]
+            auto = automata(gram)
+            gram.auto = auto
+            genGraph(auto)
+        except:
+            print("[Error en la seleccion]")
+        confirm()
     elif option == "4":
         clear()
         for i in range(len(grammars)):

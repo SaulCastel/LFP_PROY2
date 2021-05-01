@@ -12,8 +12,8 @@ class produccion:
         self.next = None
 
     def getProd(self):
-        str = f"({self.start},{self.read},{self.pop};"
-        str += f"{self.end},{self.push})"
+        str = f"({self.start}, {self.read}, {self.pop};"
+        str += f" {self.end}, {self.push})"
         return str
 
 class automata:

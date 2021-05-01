@@ -1,3 +1,5 @@
+from automaton import automata
+
 class gramatica:
     def __init__(self, parts:list) -> None:
         self.name = parts.pop(0)
@@ -11,6 +13,7 @@ class gramatica:
             prod[0] = prod[0].strip()
             prod[1] = prod[1].strip()
             self.Pr.append(prod)
+        self.auto:automata = None
 
     def showGrammar(self):
         print("\n------------------------------------------\n")
