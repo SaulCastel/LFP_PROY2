@@ -2,6 +2,7 @@ from tda import sList
 from validate import *
 import copy
 
+debug = True
 class produccion:
     def __init__(self,start,read,pop,end,push) -> None:
         self.start = start
@@ -25,7 +26,7 @@ class automata:
         self.Vt = grammar.Vt
         self.Pr = sList()
         self.genProd(grammar.Pr,self.Vt)
-        self.state = "i"
+        self.state = None
 
     def isVt(self, target) -> bool:
         for t in self.Vt:
@@ -44,19 +45,21 @@ class automata:
         self.Pr.append(produccion("q","$","#","f","$"))
     
     def validate(self,string) -> path:
-        input = self.strToArr(string)
+        self.state = "i"
+        input = self.strToArr(string,True)
         PrCopy = copy.deepcopy(self.Pr)
         first = path(input,[],PrCopy,[])
         paths = [first]
         pNum = 0
-        last = None
-        while len(paths) > 0:
-            #print("\n------------\n")
-            #print("Nuevo camino...")
-            curr:path = paths.pop(0)
-            last = curr
+        curr:path = first
+        while len(paths) > 0 and len(curr.input) > 0:
+            if debug:
+                print("\n------------\n")
+                print("Nuevo camino...")
+            curr = paths.pop(0)
             pNum += 1
-            while True:
+            fail = False
+            while not fail:
                 while self.state == "f" or curr.prod.size > 0:
                     if self.state != "f":
                         prod = curr.prod.pop(0)
@@ -86,43 +89,59 @@ class automata:
                                 self.apply(prod,curr)
                                 break
                     elif self.state == "f":
-                        print("\n------------------------\n")
-                        print(">> ¡CADENA VALIDA!")
-                        print(">> Cadena:",string)
-                        print(">> Caminos analizados:",pNum)
-                        print("\n------------------------\n")
-                        curr.valid = True
+                        if len(curr.input) == 0:
+                            print("\n------------------------\n")
+                            print(">> ¡CADENA VALIDA!")
+                            print(">> Cadena:",string)
+                            print(">> Caminos analizados:",pNum)
+                            print("\n------------------------\n")
+                            curr.valid = True
+                        else:
+                            print("\n------------------------\n")
+                            print(">> ¡CADENA INVALIDA!")
+                            print(">> Cadena:",string)
+                            print(">> Caminos analizados:",pNum)
+                            print("\n------------------------\n")
                         return curr
                 else:
-                    #print("\n------------\n")
-                    #print("Camino agotado...")
+                    if debug:
+                        print("\n------------\n")
+                        print("Camino agotado...")
                     break
+                if not len(curr.input) > 0:
+                    if curr.stack[-1] != "#":
+                        fail = True
+            else:
+                if debug:
+                    print("\n------------\n")
+                    print("Camino agotado...")
         else:
             print("\n------------------------\n")
             print(">> ¡CADENA INVALIDA!")
             print(">> Cadena:",string)
             print(">> Caminos analizados:",pNum)
             print("\n------------------------\n")
-            return last
+            return curr
     
     def apply(self,prod:produccion,curr:path):
-        if prod.read != "$":
+        if prod.read != "$" and len(curr.input) > 0:
             curr.input.pop()
         else:
             curr.used.append(prod)
-        if prod.pop != "$":
+        if prod.pop != "$" and len(curr.stack) > 0:
             curr.stack.pop()
         if prod.push != "$":
             curr.stack.extend(self.strToArr(prod.push))
         selection = prod.getProd()
         shot = snap(curr.input,curr.stack,selection)
         curr.history.append(shot)
-        #self.showStep(selection,curr.stack,curr.input)
+        if debug:
+            self.showStep(selection,curr.stack,curr.input)
         self.state = prod.end
 
-    def strToArr(self, string:str) -> list:
+    def strToArr(self, string:str,input=False) -> list:
         arr = string.split()
-        if arr[0] == string:
+        if input:
             arr = []
             for char in string:
                 arr.append(char)

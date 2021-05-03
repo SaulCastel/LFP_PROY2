@@ -4,14 +4,14 @@ from grammar import gramatica
 from automaton import automata
 from readFile import readFile
 import os
+import time
 
 messages = [
     "1. Cargar archivo",
     "2. Mostrar información general de gramática",
     "3. Generar automata de pila equivalente",
-    "4. Reporte de recorrido",
-    "5. Reporte de tabla",
-    "6. Salir"
+    "4. Reporte de tabla",
+    "5. Salir"
 ]
 
 grammars = []
@@ -21,7 +21,16 @@ confirm = lambda : input("> Presione cualquier tecla para continuar...")
 file = open("./log.txt","w")
 file.write("")
 file.close()
+clear()
+print("- Lenguajes formales y de programacion -")
+print("> Gramaticas libres de contexto")
+print("Saul Esteban Castellanos Ubeda, 201801178\n")
+for i in range(5,0,-1):
+    print(i,"",end="")
+    time.sleep(1)
 
+print("\n\n¡Bienvenido!")
+time.sleep(2)
 while True:
     clear()
     print()
@@ -29,7 +38,7 @@ while True:
         print(m)
     option = input("> Escoge una opción: ")
     print()
-    if option == "6":
+    if option == "5":
         break
     if option == "1":
         route = input("> Ruta del archivo: ")
@@ -70,24 +79,11 @@ while True:
         opt = input("> Escoge el numero: ")
         try:
             clear()
-            auto = automata(grammars[int(opt)])
-            string = input("> Ingresa una cadena: ")
-            path = auto.validate(string)
-        except:
-            print("[Error en la seleccion]")
-        confirm()
-    elif option == "5":
-        clear()
-        for i in range(len(grammars)):
-            print(f"{i}.",grammars[i].name)
-        opt = input("> Escoge el numero: ")
-        try:
-            clear()
             auto = grammars[int(opt)].auto
             string = input("> Ingresa una cadena: ")
             path = auto.validate(string)
             genTable(path,string)
-        except:
+        except ValueError or IndexError:
             print("[Error en la seleccion]")
         confirm()
 clear()

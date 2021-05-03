@@ -5,7 +5,7 @@ from grammar import gramatica
 def readFile(route):
     grammars = []
     file = open(route)
-    report(route)
+    report("Archivo cargado:" + route)
     line = None
     lines = file.readlines()
     file.close()
@@ -23,5 +23,5 @@ def readFile(route):
         if grammar.glc:
             grammars.append(grammar)
         else:
-            report(f"'{grammar.name}'' No es GLC, así que no se cargó")
+            report(f"'{grammar.name}' No es GLC, así que no se cargó")
     return grammars
