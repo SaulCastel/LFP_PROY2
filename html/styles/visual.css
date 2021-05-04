@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #000;
+    border-collapse: collapse;
+    font-size: 30px;
+}
+
+td,th {
+    border: 1px solid #000;
+}
+
+td {
+    background-color: #fceee0;
+}
+
+div {
+    width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+img {
+    width: 100%;
+}

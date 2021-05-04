@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 
 def genTable(pt:path,string):
     entries:list = pt.history
-    file = open(f"./html/tabla.html","w")
+    file = open("./html/tabla.html","w")
     file.write("<!DOCTYPE html>\n")
     root = ET.Element("html")
     head = ET.Element("head")
@@ -68,3 +68,67 @@ def genTable(pt:path,string):
     tree.write(file_or_filename=file,encoding="unicode",short_empty_elements=True)
     file.close()
     webbrowser.open_new_tab(f"./html/tabla.html")
+
+def genVisual(pt:path,string):
+    entries:list = pt.history
+    file = open("./html/path.html","w")
+    file.write("<!DOCTYPE html>\n")
+    root = ET.Element("html")
+    head = ET.Element("head")
+    title = ET.Element("title")
+    title.text = "Recorrido"
+    cssArgs = {
+        "rel" :"stylesheet",
+        "href" :"styles/visual.css"
+    }
+    css = ET.Element("link",cssArgs)
+    head.append(title)
+    head.append(css)
+    body = ET.Element("body")
+    # Llenando el body
+    div = ET.Element("div")
+    body.append(div)
+    input = ET.Element("h1")
+    input.text = f"Cadena: {string}"
+    div.append(input)
+    table = ET.Element("table")
+    index = 0
+    for entry in entries:
+        row1 = ET.Element("tr")
+        top = ET.Element("th",{"colspan":"4"})
+        imgArgs = {
+            "src":f"../graphs/path/{index}.png"
+        }
+        image = ET.Element("img",imgArgs)
+        top.append(image)
+        row1.append(top)
+        row2 = ET.Element("tr")
+        sTitle = ET.Element("td")
+        sTitle.text = "PILA"
+        stack = ET.Element("td")
+        stack.text = entry.stack
+        cTitle = ET.Element("td")
+        cTitle.text = "INPUT"
+        chars = ET.Element("td")
+        chars.text = entry.input
+        row2.append(sTitle)
+        row2.append(stack)
+        row2.append(cTitle)
+        row2.append(chars)
+        table.append(row1)
+        table.append(row2)
+        index += 1
+    div.append(table)
+    result = ET.Element("h1")
+    if pt.valid:
+        result.text = "Cadena aceptada"
+    else:
+        result.text = "Cadena invalida"
+    div.append(result)
+    root.append(head)
+    root.append(body)
+    tree = ET.ElementTree(root)
+    ET.indent(tree, space="\t", level=0)
+    tree.write(file_or_filename=file,encoding="unicode",short_empty_elements=True)
+    file.close()
+    webbrowser.open_new_tab(f"./html/path.html")

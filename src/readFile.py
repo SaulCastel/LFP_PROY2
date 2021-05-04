@@ -5,7 +5,7 @@ from grammar import gramatica
 def readFile(route):
     grammars = []
     file = open(route)
-    report("Archivo cargado:" + route)
+    report("Archivo cargado: " + route)
     line = None
     lines = file.readlines()
     file.close()

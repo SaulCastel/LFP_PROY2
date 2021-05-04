@@ -2,7 +2,7 @@ from tda import sList
 from validate import *
 import copy
 
-debug = True
+debug = False
 class produccion:
     def __init__(self,start,read,pop,end,push) -> None:
         self.start = start
@@ -15,8 +15,8 @@ class produccion:
     def getProd(self):
         end = self.end.replace(" ","")
         push = self.push.replace(" ","")
-        str = f"({self.start}, {self.read}, {self.pop};"
-        str += f" {end}, {push})"
+        str = f"{self.start}, {self.read}, {self.pop};"
+        str += f" {end}, {push}"
         return str
 
 class automata:
