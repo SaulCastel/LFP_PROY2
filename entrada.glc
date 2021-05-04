@@ -33,12 +33,12 @@ D->8
 D->9
 *
 gramaticaTest
-M,N;z,a,b;S
-S-> z M N z
-M-> a M a
-M-> z
-N-> b N b
-N-> z
+M,N,S;z,a,b;S
+S->z M N z
+M->a M a
+M->z
+N->b N b
+N->z
 *
 Gramatica2
 A,B,C,D;0,1;A

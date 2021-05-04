@@ -1,2 +1,0 @@
-> Archivo cargado: entrada.glc
-> 'Gramatica2' No es GLC, así que no se cargó
